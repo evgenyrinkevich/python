@@ -1,12 +1,24 @@
-PHRASE_LIST = ['в', '5', 'часов', '17', 'минут', 'температура', 'воздуха', 'была', '+5', 'градусов']
-phrase_correct = []
-for element in PHRASE_LIST:
-    if element.isdigit():
-        element = f'{int(element):02}'
-        phrase_correct.extend([f'"{element}"'])
-    elif element[0] == '+' or element[0] == '-' and element[1:].isdigit():
-        element = element[0] + f'{int(element[1:]):02}'
-        phrase_correct.extend([f'"{element}"'])
+eng_rus_dict = {
+    'zero': 'ноль',
+    'one': 'один',
+    'two': 'два',
+    'three': 'три',
+    'four': 'четыре',
+    'five': 'пять',
+    'six': 'шесть',
+    'seven': 'семь',
+    'eight': 'восемь',
+    'nine': 'девять',
+    'ten': 'десять',
+}
+
+
+def num_translate(eng_num):
+    if eng_num[0].isupper() and eng_num.lower() in eng_rus_dict:
+        rus_num = eng_rus_dict.get(eng_num.lower()).title()
     else:
-        phrase_correct.append(element)
-print(' '.join(phrase_correct))
+        rus_num = eng_rus_dict.get(eng_num)
+    return rus_num
+
+
+print(num_translate('zero'))

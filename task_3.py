@@ -1,9 +1,12 @@
-weather_report = ['в', '5', 'часов', '17', 'минут', 'температура', 'воздуха', 'была', '+5', 'градусов']
+def thesaurus(*args):
+    names_dict = {}
+    for name in args:
+        if name[0] in names_dict:
+            names_dict.get(name[0]).append(name)
+        else:
+            _names_list = [name]
+            names_dict.setdefault(name[0], _names_list)
+    return names_dict
 
-for i in range(len(weather_report)):
-    if weather_report[i].isdigit():
-        weather_report[i] = f'"{int(weather_report[i]):02}"'
-    elif weather_report[i][0] == '+' or weather_report[i][0] == '-' and weather_report[i][1:].isdigit():
-        weather_report[i] = f'"{weather_report[i][0]}{int(weather_report[i][1:]):02}"'
 
-print(' '.join(weather_report))
+print(thesaurus("Иван", "Мария", "Петр", "Илья", "Имя", "Пупя"))

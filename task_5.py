@@ -1,34 +1,29 @@
-item_prices = [57.8, 0.34, 46.51, 97, 56.1, 23.45, 64, 13.45, 98.84, 71, 41.2]
+nouns = ["автомобиль", "лес", "огонь", "город", "дом"]
+adverbs = ["сегодня", "вчера", "завтра", "позавчера", "ночью"]
+adjectives = ["веселый", "яркий", "зеленый", "утопичный", "мягкий"]
 
-# задание А
-for item in item_prices:
-    cur_item_price = str(item).split('.')
-    if len(cur_item_price) < 2:
-        print(f'{cur_item_price[0]} рублей 00 копеек')
+
+def get_jokes(n, flag=True):
+    """"
+    Makes n random jokes from 3 lists
+    :param n: number of jokes
+    :param flag: if True any word can only be used in 1 joke
+    :return: a list with jokes in strings
+    """
+    from random import choice
+    jokes = []
+    if flag :
+        for i in range(n):
+            noun, adverb, adjective = choice(nouns), choice(adverbs), choice(adjectives)
+            nouns.remove(noun)
+            adverbs.remove(adverb)
+            adjectives.remove(adjective)
+            jokes.append(f"{noun} {adverb} {adjective}")
     else:
-        print(f'{cur_item_price[0]} рублей {int(cur_item_price[1]):02} копеек')
+        for i in range(n):
+            jokes.append(f"{choice(nouns)} {choice(adverbs)} {choice(adjectives)}")
 
-# задание B
-item_prices.sort()
-for item in item_prices:
-    cur_item_price = str(item).split('.')
-    if len(cur_item_price) < 2:
-        print(f'{cur_item_price[0]} рублей 00 копеек')
-    else:
-        print(f'{cur_item_price[0]} рублей {int(cur_item_price[1]):02} копеек')
-
-# задание C
-item_prices_reversed = sorted(item_prices, reverse=True)
-print(item_prices_reversed)
-
-# задание D
-highest_prices = sorted(item_prices_reversed[:5])
-
-for item in highest_prices:
-    cur_item_price = str(item).split('.')
-    if len(cur_item_price) < 2:
-        print(f'{cur_item_price[0]} рублей 00 копеек')
-    else:
-        print(f'{cur_item_price[0]} рублей {int(cur_item_price[1]):02} копеек')
+    return jokes
 
 
+print(get_jokes(5))
