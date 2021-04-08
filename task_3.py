@@ -1,23 +1,22 @@
-from itertools import zip_longest
+with open('users.csv', 'r', encoding='utf-8') as f:
+    users = f.read()
+    users_list = users.splitlines()
 
-tutors = [
-    'Иван', 'Анастасия', 'Петр', 'Сергей',
-    'Дмитрий', 'Борис', 'Елена'
-]
-klasses = [
-    '9А', '7В', '9Б', '9В', '8Б', '10А', '10Б', '9А'
-]
+with open('hobby.csv', 'r', encoding='utf-8') as f:
+    hobby = f.read()
+    hobby_list = hobby.splitlines()
 
-if len(tutors) < len(klasses):  # кол-во кортежей не должно быть больше длины списка tutors
-    klasses = [x for x in klasses[:len(tutors)]]
-
-tut_klass = zip_longest(tutors, klasses, fillvalue=None)
-
-next_el_exists = True
-while next_el_exists: #Проверяем его работу вплоть до истощения.
-    try:
-        print(next(tut_klass))
-    except StopIteration:
-        next_el_exists = False
-        print('Генератор истощен')
-
+usr_hobby_dict = dict()
+if len(users_list) > len(hobby_list):
+    for i in range(len(hobby_list)):
+        usr_hobby_dict[users_list[i]] = hobby_list[i]
+    for i in range(len(hobby_list), len(users_list)):
+        usr_hobby_dict[users_list[i]] = None
+else:
+    for i in range(len(hobby_list)):
+        usr_hobby_dict[users_list[i]] = hobby_list[i]
+# Если список пользователей длиннее списка хобби - в остаток записываем Имя: None
+# Если короче - вылетаем с ошибкой
+print(usr_hobby_dict)
+with open('usr_hobby.txt', 'w', encoding='utf-8') as f:
+    f.write(str(usr_hobby_dict))
