@@ -1,20 +1,14 @@
-import re
-import requests
-import os
+class Road:
+    mass_sq_meter = 25
+    thickness = 5
+
+    def __init__(self, length, width):
+        self._length = length
+        self._width = width
+
+    def get_mass(self):
+        print(f'Масса асфальта: {self._length * self._width * self.mass_sq_meter * self.thickness}')
 
 
-logs = requests.get(
-    'https://github.com/elastic/examples/raw/master/Common%20Data%20Formats/nginx_logs/nginx_logs')
-with open('logs.txt', 'w', encoding='utf-8') as f:
-    f.write(logs.text)
-
-
-pattern = re.compile(r'(.{8,15}) - - \[(.+)] \"([A-Z]+) /(.+) HTTP.+\" ([0-9]+) ([0-9]+)')
-
-with open('logs.txt', 'r', encoding='utf-8') as f:
-    for line in f:
-        result = pattern.search(line)
-        parsed_raw = (result.group(i) for i in range(1, 7))
-        print(*parsed_raw, sep=', ')
-
-os.remove("logs.txt")
+a = Road(1, 2)
+a.get_mass()

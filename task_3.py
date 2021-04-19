@@ -1,32 +1,26 @@
-from functools import wraps
+class Worker:
+    def __init__(self, name, surname, position, income):
+        self.name = name
+        self.surname = surname
+        self.position = position
+        self._income = income
 
 
-def type_logger(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        print(func.__name__, end='  ')
-        print(*args, kwargs, sep=',', end=': ')
-        print(type(func(*args, **kwargs)))
-    return wrapper
+class Position(Worker):
+    def get_full_name(self):
+        print(self.name, self.surname)
+
+    def get_total_income(self):
+        summ = 0
+        for money in self._income:
+            summ += self._income[money]
+        print(f'Общий доход: {summ}')
 
 
-@type_logger
-def calc_cube(x):
-    return x ** 3
-
-
-@type_logger
-def half_summ(*args):
-    result = list(args)
-    return sum(result) / 2
-
-
-@type_logger
-def kwargs_func(*args, **kwargs):
-    return True
-
-
-a = calc_cube(5)
-b = half_summ(1, 2, 3)
-c = kwargs_func(1, 2, 3, key='aaa', val='bbb')
-print(calc_cube.__name__)
+first_name, last_name, posit = 'Sam', 'Smith', 'developer'
+inc = {'wage': 50000,
+       'bonus': 5000}
+a = Position(first_name, last_name, posit, inc)
+print(a.position)
+a.get_full_name()
+a.get_total_income()

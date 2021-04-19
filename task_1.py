@@ -1,21 +1,31 @@
-import re
-import sys
+class TrafficLight:
+    def __init__(self, color):
+        self.__color = color
+
+    def running(self):
+        from time import sleep
+        times = {'красный': 2,
+                 'желтый': 2,
+                 'зеленый': 2
+                 }
+        print('Press Control+C to interrupt')
+        try:
+            while True:
+                if self.__color == 'красный':
+                    print('Горит красный свет')
+                    sleep(times['красный'])
+                    self.__color = 'желтый'
+                elif self.__color == 'желтый':
+                    print('Горит желтый свет')
+                    sleep(times['желтый'])
+                    self.__color = 'зеленый'
+                else:
+                    print('Горит зеленый свет')
+                    sleep(times['зеленый'])
+                    self.__color = 'красный'
+        except KeyboardInterrupt:
+            pass
 
 
-def email_parse(address):
-    pattern = r"^((\w|\.|_|-)+)@((\w|_|-|\.)+\.\w+)$"
-    # тут понаставил скобок, чтобы парсилось то что нужно
-    # читать невозможно, но работает))
-    validate = re.search(pattern, address)
-    parsed_email = dict()
-    if validate:
-        parsed_email['username'] = validate.group(1)
-        parsed_email['domain'] = validate.group(3)
-        print(parsed_email)
-    else:
-        raise ValueError
-
-
-if __name__ == '__main__':
-    email = sys.argv[1]
-    email_parse(email)
+a = TrafficLight('зеленый')
+a.running()
