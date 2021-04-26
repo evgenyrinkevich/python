@@ -1,40 +1,43 @@
-class Matrix:
-    def __init__(self, matr):
-        self.matr = matr
+class Date:
+    def __init__(self, date_str):
+        self.date_str = date_str
 
-    def __str__(self):
-        # __str__ должен возвращать объект str поэтому создаем строку
-        output_str = ''
-        for i in range(len(self.matr)):
-            for j in range(len(self.matr[i])):
-                output_str += f'{self.matr[i][j]:02} '
-            #     тут допустил 2значные числа чтобы красиво выводилось
-            output_str += '\n'
-        return output_str
+    # не понятно зачем здесь @classmethod и @staticmethod
+    # логично было бы работать с аргументом инстанса
+    @classmethod
+    def to_int(cls, string):
+        day, month, year = string.split('-')
+        day, month, year = int(day), int(month), int(year)
+        return day, month, year
 
-    def __add__(self, other):
-        if len(self.matr) == len(other.matr) and len(self.matr[0]) == len(other.matr[0]):
-            sum_matrix = [
-                [cell_1 + cell_2 for cell_1, cell_2 in zip(row_1, row_2)]
-                for row_1, row_2 in zip(self.matr, other.matr)]
-            return Matrix(sum_matrix)
-        # решил возвратить объект класса Matrix, так как складываем 2 таких объекта
-        else:
-            return 'матрицы разного размера'
+    @staticmethod
+    def validate(day, month, year):
+        day_val = {
+            1: range(1, 32),
+            2: range(1, 29),
+            3: range(1, 32),
+            4: range(1, 31),
+            5: range(1, 32),
+            6: range(1, 31),
+            7: range(1, 32),
+            8: range(1, 32),
+            9: range(1, 31),
+            10: range(1, 32),
+            11: range(1, 31),
+            12: range(1, 32)
+        }
+        out_str = 'The date is valid'
+        if year < 0:
+            out_str = 'Year is not correct'
+        if not 0 < month < 13:
+            out_str = 'Month is not set correctly'
+        if 0 < month < 13 and day not in day_val[month]:
+            out_str = 'Day is not in correct format'
+
+        return out_str
 
 
 if __name__ == '__main__':
-    m1 = [[1, 3, 5, 7],
-          [4, 6, 8, 10],
-          [12, 15, 18, 21]
-          ]
-
-    m2 = [[4, 1, 1, 2],
-          [1, 2, 3, 4],
-          [1, 5, 1, 2]
-          ]
-
-    mat = Matrix(m1)
-    mat2 = Matrix(m2)
-    print(mat)
-    print(mat + mat2)
+    a = Date('23-01-2021')
+    print(a.to_int(a.date_str))
+    print(a.validate(30, 2, 2021))
